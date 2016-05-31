@@ -45,7 +45,7 @@ int city_count(tour_t *tour) {
 }
 void TSP(tour_t *tour) {
   if(city_count(tour) == num_cities) {
-    int w = 0, idx = -1,   = tour->A[tour->city - 1];
+    int w = 0, idx = -1, cur_city = tour->A[tour->city - 1];
     for (int i = 0; i < G[cur_city].size(); i++) {
       if (G[cur_city][i].first == ROOT_PATH) {
         idx = i; break;

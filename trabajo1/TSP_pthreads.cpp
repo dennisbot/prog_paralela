@@ -55,7 +55,7 @@ void mostrar_path (tour_t *tour) {
   cout << tour->cost << endl;
 
 }
-queue<pair<tour_t*, int> > TSP_pthreads() {
+queue<pair<tour_t*, int> > TSP_pthreads(int nivel) {
 
   tour_t *tour = new tour_t;
   tour->cost = 0;
@@ -69,7 +69,7 @@ queue<pair<tour_t*, int> > TSP_pthreads() {
     pair<tour_t*, int> ptour_t = q.front();
     tour_t *cur_tour = ptour_t.first;
     int depth = ptour_t.second;
-    if (depth >= 2) break;
+    if (depth >= nivel) break;
     // NUM_THREADS
     q.pop();
     // seguimos expandiendo en BFS
@@ -142,7 +142,8 @@ int main() {
     }
     best_tour = new tour_t;
     best_tour->cost = 1 << 30;
-    queue<pair<tour_t*, int> > q = TSP_pthreads();
+    int nivel = 2;
+    queue<pair<tour_t*, int> > q = TSP_pthreads(nivel);
     vector<tour_t*> subtours;
     while (!q.empty()) {
       subtours.push_back(q.front().first);

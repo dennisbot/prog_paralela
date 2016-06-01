@@ -72,25 +72,29 @@ void TSP(tour_t *tour) {
 }
 
 int main() {
-  scanf("%d %d\n",&n, &num_cities);
-  // inicializar nodos
-  fill(G,G+n,vector<pair<int,int> >());
-  int a,b,w;
-  // leyendo el grafo
-  for(int i=0;i<n;i++) {
-    scanf("%d %d %d\n",&a,&b,&w);
-    G[a].push_back(make_pair(b,w));
+  int times;
+  scanf ("%d\n", &times);
+  while (times--) {
+    scanf("%d %d\n",&n, &num_cities);
+    // inicializar nodos
+    fill(G,G+n,vector<pair<int,int> >());
+    int a,b,w;
+    // leyendo el grafo
+    for(int i=0;i<n;i++) {
+      scanf("%d %d %d\n",&a,&b,&w);
+      G[a].push_back(make_pair(b,w));
+    }
+    
+    tour = new tour_t;
+    best_tour = new tour_t;
+    best_tour->cost = 1 << 30;
+    tour->cost = 0;
+    tour->A[0] = ROOT_PATH;
+    tour->city = 1;
+    
+    TSP(tour);
+    printf("best_tour->cost %d\n", best_tour->cost);
   }
-  
-  tour = new tour_t;
-  best_tour = new tour_t;
-  best_tour->cost = 1 << 30;
-  tour->cost = 0;
-  tour->A[0] = ROOT_PATH;
-  tour->city = 1;
-  
-  TSP(tour);
-  printf("best_tour->cost %d\n", best_tour->cost);
   
   return 0;
 }

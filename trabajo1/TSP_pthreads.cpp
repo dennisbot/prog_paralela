@@ -127,28 +127,32 @@ queue<pair<tour_t*, int> > TSP_pthreads() {
 // }
 
 int main() {
-
-  scanf("%d %d\n",&n, &num_cities);
-  // db2(n, num_cities);
-  // inicializar nodos
-  fill(G,G+n,vector<pair<int,int> >());
-  int a,b,w;
-  // leyendo el grafo
-  for(int i=0;i<n;i++) {
-    scanf("%d %d %d\n",&a,&b,&w);
-    G[a].push_back(make_pair(b,w));
+  int times;
+  scanf ("%d\n", &times);
+  while (times--) {
+    scanf("%d %d\n",&n, &num_cities);
+    // db2(n, num_cities);
+    // inicializar nodos
+    fill(G,G+n,vector<pair<int,int> >());
+    int a,b,w;
+    // leyendo el grafo
+    for(int i=0;i<n;i++) {
+      scanf("%d %d %d\n", &a, &b, &w);
+      G[a].push_back(make_pair(b,w));
+    }
+    best_tour = new tour_t;
+    best_tour->cost = 1 << 30;
+    queue<pair<tour_t*, int> > q = TSP_pthreads();
+    vector<tour_t*> subtours;
+    while (!q.empty()) {
+      subtours.push_back(q.front().first);
+      q.pop();
+    }
+    for (int i = 0; i < subtours.size(); i++) {
+      mostrar_path(subtours[i]);
+    }
+    // el arreglo que usas es qq
+    printf("best_tour->cost %d\n", best_tour->cost);
   }
-  best_tour = new tour_t;
-  best_tour->cost = 1 << 30;
-  queue<pair<tour_t*, int> > q = TSP_pthreads();
-  queue<tour_t*> qq;
-  while (!q.empty()) {
-    qq.push(q.front().first);
-    q.pop();
-  }
-
-  // el arreglo que usas es qq
-  printf("best_tour->cost %d\n", best_tour->cost);
-  
   return 0;
 }
